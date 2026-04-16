@@ -122,16 +122,14 @@ export default async function CasePage({
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
   );
 
-  const { data, error } = await supabase
+  const { data: rows, error } = await supabase
     .from("cases")
-    .select(
-      "case_id, vehicle_profile, overall_confidence, safety_status, pull_detected, report_json"
-    )
+    .select("case_id, vehicle_profile, overall_confidence, safety_status, pull_detected, report_json")
     .eq("case_id", id)
     .order("created_at", { ascending: false })
-    .limit(1)
-    .then(res => ({ data: res.data?.[0] ?? null, error: res.error }));
+    .limit(1);
 
+  const data = rows?.[0] ?? null;
   if (!data) notFound();
 
   const row = data as CaseRow;

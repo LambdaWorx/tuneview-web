@@ -190,7 +190,7 @@ export default function ScanDemo() {
       <div className="max-w-5xl mx-auto">
 
         {/* Section label */}
-        <p className="font-mono text-[9px] tracking-widest text-cyan mb-4">
+        <p className="font-mono text-[11px] tracking-widest text-cyan mb-4">
           // LIVE SCAN DEMO — CASE_001 · Dev Truck · 416ci Whipple 2.9L · Flex Fuel
         </p>
         <motion.h2
@@ -223,7 +223,7 @@ export default function ScanDemo() {
             <span className="font-display font-bold text-t1 text-base tracking-wide">
               <span className="text-t3">Tune</span>View
             </span>
-            <span className="font-mono text-[8px] tracking-widest text-t3">
+            <span className="font-mono text-[11px] tracking-widest text-t2">
               CASE_001 · PRO TIER · 2026-04-14
             </span>
           </div>
@@ -240,7 +240,7 @@ export default function ScanDemo() {
               {overallGrade}
             </span>
             <div className="flex-1">
-              <p className="font-mono text-[8px] tracking-widest text-t3 mb-2">
+              <p className="font-mono text-[11px] tracking-widest text-t2 mb-2">
                 WEIGHTED SCORE / {overallScore} / 100
               </p>
               <div className="h-2 rounded-full overflow-hidden" style={{ background: "var(--border2)" }}>
@@ -252,7 +252,7 @@ export default function ScanDemo() {
                   }}
                 />
               </div>
-              <p className="font-mono text-[7px] tracking-widest text-t3 mt-1">
+              <p className="font-mono text-[11px] tracking-widest text-t2 mt-1">
                 {overallScore}% · Click a grade tile for details · Adjust weights →
               </p>
             </div>
@@ -296,7 +296,7 @@ export default function ScanDemo() {
                     {tile.label}
                   </p>
                   <p
-                    className={`font-mono text-[8px] tracking-widest ${tile.italic ? "italic" : ""}`}
+                    className={`font-mono text-[11px] tracking-widest ${tile.italic ? "italic" : ""}`}
                     style={{ color: tile.color }}
                   >
                     tap for details →
@@ -309,7 +309,7 @@ export default function ScanDemo() {
 
         {/* ── B. Module Cards ────────────────────────────────────────────── */}
         <div className="mb-6">
-          <p className="font-mono text-[8px] tracking-widest text-t3 mb-4">
+          <p className="font-mono text-[11px] tracking-widest text-t2 mb-4">
             // SCAN MODULES — 11 SYSTEMS ANALYZED
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
@@ -333,15 +333,15 @@ export default function ScanDemo() {
                   style={{ background: SEV_COLOR[mod.sev] }}
                 />
                 <div className="min-w-0">
-                  <p className="font-mono text-[8px] tracking-widest mb-0.5" style={{ color: SEV_COLOR[mod.sev] }}>
+                  <p className="font-mono text-[11px] tracking-widest mb-0.5" style={{ color: SEV_COLOR[mod.sev] }}>
                     {mod.system.toUpperCase()}
                   </p>
-                  <p className="font-display font-bold text-t1 text-sm leading-snug mb-1.5">
+                  <p className="font-display font-bold text-t1 text-base leading-snug mb-1.5">
                     {mod.finding}
                   </p>
                   <div className="flex flex-wrap gap-x-3 gap-y-0.5">
                     {mod.metrics.map((m, j) => (
-                      <span key={j} className="font-mono text-[8px] tracking-wide text-t3">
+                      <span key={j} className="font-mono text-[11px] tracking-wide text-t2">
                         {m}
                       </span>
                     ))}
@@ -365,20 +365,20 @@ export default function ScanDemo() {
           <div className="px-5 py-4">
             <div className="flex items-center gap-3 mb-3">
               <span
-                className="font-mono text-[9px] tracking-widest px-2 py-0.5 rounded-[2px]"
+                className="font-mono text-[11px] tracking-widest px-2 py-0.5 rounded-[2px]"
                 style={{ background: "rgba(255,80,80,0.12)", color: "#FF5050", border: "1px solid rgba(255,80,80,0.25)" }}
               >
                 P1 · CRITICAL
               </span>
-              <span className="font-mono text-[9px] tracking-widest text-t3">VIRTUAL VE</span>
+              <span className="font-mono text-[11px] tracking-widest text-t2">VIRTUAL VE</span>
             </div>
-            <p className="font-display font-bold text-t1 text-base leading-snug mb-2">
+            <p className="font-display font-bold text-t1 text-lg leading-snug mb-2">
               Add LTFT and STFT channels to your log before making VVE corrections.
             </p>
-            <p className="font-mono text-[9px] leading-relaxed text-t2 mb-3">
+            <p className="font-mono text-[13px] leading-relaxed text-t1 mb-3">
               20 cells show airmass error but fuel trim data is required to compute accurate correction values.
             </p>
-            <p className="font-mono text-[9px] leading-relaxed" style={{ color: "#FF5050", opacity: 0.7 }}>
+            <p className="font-mono text-[13px] leading-relaxed" style={{ color: "#FF5050", opacity: 0.85 }}>
               In HPTuners Scanner, add: Long Term Fuel Trim Bank 1, Long Term Fuel Trim Bank 2,
               Short Term Fuel Trim Bank 1, Short Term Fuel Trim Bank 2. Re-log and re-upload.
             </p>
@@ -434,15 +434,15 @@ export default function ScanDemo() {
             <div className="px-6 py-5">
               {/* Header */}
               <div className="flex items-center justify-between mb-1">
-                <p className="font-mono text-[9px] tracking-widest text-cyan">// TUNE WEIGHT PROFILE</p>
+                <p className="font-mono text-[11px] tracking-widest text-cyan">// TUNE WEIGHT PROFILE</p>
                 <button
                   onClick={() => setPanel(null)}
-                  className="font-mono text-[8px] tracking-widest text-t3 hover:text-t1 transition-colors"
+                  className="font-mono text-[11px] tracking-widest text-t2 hover:text-t1 transition-colors"
                 >
                   // CLOSE ×
                 </button>
               </div>
-              <p className="font-mono text-[8px] leading-relaxed text-t3 mb-6">
+              <p className="font-mono text-[12px] leading-relaxed text-t2 mb-6">
                 Adjust scoring weights to match how you use your vehicle
               </p>
 
@@ -452,7 +452,7 @@ export default function ScanDemo() {
                   <button
                     key={name}
                     onClick={() => applyPreset(name)}
-                    className="font-mono text-[8px] tracking-widest px-3 py-1.5 rounded-[2px] transition-colors"
+                    className="font-mono text-[11px] tracking-widest px-3 py-1.5 rounded-[2px] transition-colors"
                     style={{
                       background: "rgba(0,220,255,0.04)",
                       border: "1px solid rgba(0,220,255,0.15)",
@@ -484,10 +484,10 @@ export default function ScanDemo() {
               ).map(({ key, label }) => (
                 <div key={key} className="mb-5">
                   <div className="flex items-center justify-between mb-1.5">
-                    <span className="font-mono text-[8px] tracking-widest text-t2">{label}</span>
+                    <span className="font-mono text-[12px] tracking-widest text-t1">{label}</span>
                     <span
-                      className="font-mono text-[10px] tracking-widest"
-                      style={{ color: "rgba(0,220,255,0.7)" }}
+                      className="font-mono text-[12px] tracking-widest"
+                      style={{ color: "rgba(0,220,255,0.85)" }}
                     >
                       {weights[key]}
                     </span>
@@ -512,7 +512,7 @@ export default function ScanDemo() {
                 className="mt-6 p-4 rounded-[2px]"
                 style={{ background: "rgba(0,0,0,0.3)", border: "1px solid var(--border)" }}
               >
-                <p className="font-mono text-[7px] tracking-widest text-t3 mb-2">WEIGHTED OVERALL</p>
+                <p className="font-mono text-[11px] tracking-widest text-t2 mb-2">WEIGHTED OVERALL</p>
                 <div className="flex items-baseline gap-3">
                   <span
                     className="font-display font-bold text-4xl transition-colors duration-300"
@@ -520,7 +520,7 @@ export default function ScanDemo() {
                   >
                     {overallGrade}
                   </span>
-                  <span className="font-mono text-[11px]" style={{ color: overallColor, opacity: 0.6 }}>
+                  <span className="font-mono text-[13px]" style={{ color: overallColor, opacity: 0.85 }}>
                     {overallScore}/100
                   </span>
                 </div>
@@ -549,10 +549,10 @@ export default function ScanDemo() {
             <div className="px-6 py-5">
               {/* Header */}
               <div className="flex items-center justify-between mb-6">
-                <p className="font-mono text-[9px] tracking-widest text-cyan">// CATEGORY DETAIL</p>
+                <p className="font-mono text-[11px] tracking-widest text-cyan">// CATEGORY DETAIL</p>
                 <button
                   onClick={() => setPanel(null)}
-                  className="font-mono text-[8px] tracking-widest text-t3 hover:text-t1 transition-colors"
+                  className="font-mono text-[11px] tracking-widest text-t2 hover:text-t1 transition-colors"
                 >
                   // CLOSE ×
                 </button>
@@ -571,7 +571,7 @@ export default function ScanDemo() {
                     {detailTile.label}
                   </p>
                   {detail.score != null && (
-                    <p className="font-mono text-[9px] tracking-widest" style={{ color: detailTile.color, opacity: 0.7 }}>
+                    <p className="font-mono text-[11px] tracking-widest" style={{ color: detailTile.color, opacity: 0.85 }}>
                       Score: {detail.score} / 100
                     </p>
                   )}
@@ -580,12 +580,12 @@ export default function ScanDemo() {
 
               {/* Metrics */}
               <div className="mb-6">
-                <p className="font-mono text-[8px] tracking-widest text-t3 mb-3">FINDINGS</p>
+                <p className="font-mono text-[11px] tracking-widest text-t2 mb-3">FINDINGS</p>
                 <div className="flex flex-col gap-2">
                   {detail.metrics.map((m, i) => (
                     <div key={i} className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full flex-shrink-0" style={{ background: detailTile.color, opacity: 0.6 }} />
-                      <p className="font-mono text-[9px] leading-relaxed text-t2">{m}</p>
+                      <p className="font-mono text-[13px] leading-relaxed text-t1">{m}</p>
                     </div>
                   ))}
                 </div>
@@ -596,8 +596,8 @@ export default function ScanDemo() {
                 className="p-4 rounded-[2px]"
                 style={{ background: "rgba(0,220,255,0.03)", border: "1px solid rgba(0,220,255,0.1)" }}
               >
-                <p className="font-mono text-[8px] tracking-widest text-cyan mb-2">TO IMPROVE</p>
-                <p className="font-mono text-[9px] leading-relaxed text-t2">
+                <p className="font-mono text-[11px] tracking-widest text-cyan mb-2">TO IMPROVE</p>
+                <p className="font-mono text-[13px] leading-relaxed text-t1">
                   {detail.improve}
                 </p>
               </div>

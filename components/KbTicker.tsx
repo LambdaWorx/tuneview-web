@@ -2,25 +2,75 @@
 
 /**
  * KbTicker — live calibration knowledge base stats banner.
- * DEBUG MODE: hardcoded stats + red background to confirm render.
- * Restore live fetch + correct styling once confirmed visible.
+ * Client component: renders immediately with hardcoded stats,
+ * then upgrades to live Supabase data on mount.
+ * Never returns null — always visible regardless of fetch outcome.
  * @keyframes kb-ticker defined in globals.css
  */
 
-const MONO = "'Share Tech Mono', monospace";
+import { useEffect, useState } from "react";
 
-const REPEAT = 16; // 8 * 2 for the seamless loop
+const MONO = "'Share Tech Mono', monospace";
+const REPEAT = 16; // 8 × 2 for the seamless -50% loop
+
+type Stats = { total: number; cats: number; families: number };
+
+const HARDCODED: Stats = { total: 343, cats: 32, families: 12 };
+
+function TickerContent({ stats }: { stats: Stats }) {
+  const prefix =
+    `// CALIBRATION KNOWLEDGE BASE · ${stats.total} ENTRIES · ` +
+    `${stats.cats} CATEGORIES · ${stats.families} ENGINE FAMILIES · `;
+
+  return (
+    <>
+      {Array.from({ length: REPEAT }, (_, i) => (
+        <span key={i}>
+          {prefix}
+          <span style={{ color: "#FFD700" }}>UPDATED LIVE</span>
+          {" · "}
+        </span>
+      ))}
+    </>
+  );
+}
 
 export default function KbTicker() {
+  const [stats, setStats] = useState<Stats>(HARDCODED);
+
+  useEffect(() => {
+    const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    if (!url || !key) return;
+
+    fetch(`${url}/rest/v1/calibration_knowledge?select=category,engine_family`, {
+      headers: {
+        apikey: key,
+        Authorization: `Bearer ${key}`,
+        Accept: "application/json",
+      },
+    })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((rows) => {
+        if (!Array.isArray(rows) || rows.length === 0) return;
+        const total    = rows.length;
+        const cats     = new Set(rows.map((r: any) => r.category)).size;
+        const families = new Set(rows.map((r: any) => r.engine_family).filter(Boolean)).size;
+        setStats({ total, cats, families });
+      })
+      .catch(() => {/* keep hardcoded */});
+  }, []);
+
   return (
     <div
       style={{
         width: "100%",
-        background: "red", // DEBUG — remove once confirmed visible
+        background: "#080a0e",
         overflow: "hidden",
         height: 28,
         display: "flex",
         alignItems: "center",
+        borderBottom: "1px solid rgba(0,220,255,0.1)",
         position: "relative",
         zIndex: 50,
       }}
@@ -31,7 +81,7 @@ export default function KbTicker() {
         style={{
           position: "absolute",
           left: 0, top: 0, bottom: 0, width: 48,
-          background: "linear-gradient(to right, red, transparent)", // DEBUG
+          background: "linear-gradient(to right, #080a0e, transparent)",
           zIndex: 1,
           pointerEvents: "none",
         }}
@@ -42,7 +92,7 @@ export default function KbTicker() {
         style={{
           position: "absolute",
           right: 0, top: 0, bottom: 0, width: 48,
-          background: "linear-gradient(to left, red, transparent)", // DEBUG
+          background: "linear-gradient(to left, #080a0e, transparent)",
           zIndex: 1,
           pointerEvents: "none",
         }}
@@ -60,16 +110,10 @@ export default function KbTicker() {
             fontFamily: MONO,
             fontSize: 11,
             letterSpacing: "0.1em",
-            color: "#ffffff",
+            color: "rgba(0,220,255,0.65)",
           }}
         >
-          {Array.from({ length: REPEAT }, (_, i) => (
-            <span key={i}>
-              {"// CALIBRATION KNOWLEDGE BASE · 343 ENTRIES · 32 CATEGORIES · 12 ENGINE FAMILIES · "}
-              <span style={{ color: "#FFD700" }}>UPDATED LIVE</span>
-              {" · "}
-            </span>
-          ))}
+          <TickerContent stats={stats} />
         </span>
       </div>
     </div>

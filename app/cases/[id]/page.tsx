@@ -128,9 +128,11 @@ export default async function CasePage({
       "case_id, vehicle_profile, overall_confidence, safety_status, pull_detected, report_json"
     )
     .eq("case_id", id)
-    .single();
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .then(res => ({ data: res.data?.[0] ?? null, error: res.error }));
 
-  if (error || !data) notFound();
+  if (!data) notFound();
 
   const row = data as CaseRow;
   const report: ReportJson = JSON.parse(row.report_json || "{}");

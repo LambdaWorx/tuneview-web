@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 import ScanAnimation from "./ScanAnimation";
 
 const UploadDecor = () => (
@@ -136,6 +137,37 @@ export default function HowItWorks() {
             </motion.div>
           ))}
         </div>
+
+        {/* See a real scan — CASE_001 Dev Truck — 416ci Whipple */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4, delay: 0.4 }}
+          className="mt-8 flex flex-col items-start gap-1"
+        >
+          <span className="font-mono text-[8px] tracking-widest text-t3">
+            // CASE_001 — Dev Truck — 416ci Whipple
+          </span>
+          <Link
+            href="/cases/CASE_001"
+            className="rounded-[2px] px-5 py-2.5 font-mono text-xs tracking-widest text-cyan transition-colors hover:text-bg"
+            style={{
+              border: "1px solid var(--color-cyan)",
+              background: "transparent",
+            }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLAnchorElement).style.background =
+                "var(--color-cyan)";
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLAnchorElement).style.background =
+                "transparent";
+            }}
+          >
+            See a real scan →
+          </Link>
+        </motion.div>
       </div>
     </section>
   );

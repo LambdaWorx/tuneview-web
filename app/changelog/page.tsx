@@ -53,12 +53,23 @@ function ItemCard({ item, dim }: { item: ChangelogItem; dim?: boolean }) {
           {item.tags.map((t) => <TagPill key={t} tag={t} />)}
         </div>
       </div>
-      <p
-        className="font-display text-[14px] leading-[1.65] m-0"
-        style={{ color: dim ? "rgba(200,240,255,0.42)" : "rgba(200,240,255,0.60)" }}
-      >
-        {item.description}
-      </p>
+      {Array.isArray(item.description) ? (
+        <ul
+          className="font-display text-[14px] leading-[1.65] m-0 list-disc pl-5"
+          style={{ color: dim ? "rgba(200,240,255,0.42)" : "rgba(200,240,255,0.60)" }}
+        >
+          {item.description.map((line, i) => (
+            <li key={i} className="mb-1">{line}</li>
+          ))}
+        </ul>
+      ) : (
+        <p
+          className="font-display text-[14px] leading-[1.65] m-0"
+          style={{ color: dim ? "rgba(200,240,255,0.42)" : "rgba(200,240,255,0.60)" }}
+        >
+          {item.description}
+        </p>
+      )}
     </div>
   );
 }

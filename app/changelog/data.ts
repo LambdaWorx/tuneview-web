@@ -13,7 +13,8 @@ export type ChangelogTag = "Security" | "Infrastructure" | "Product" | "AI";
 export type ChangelogItem = {
   title: string;
   tags: ChangelogTag[];
-  description: string;
+  // string → rendered as a paragraph; string[] → rendered as bullets.
+  description: string | string[];
 };
 
 export type ChangelogEntry = {
@@ -34,58 +35,69 @@ export const CHANGELOG: ChangelogEntry[] = [
       {
         title: "Log upload accepts real HPTuners logs",
         tags: ["Product"],
-        description:
-          "The validator was rejecting every real VCM Scanner CSV because the check read the first line of the file expecting column headers — but HPT logs have a 9-line preamble ('HP Tuners CSV Log File', version, [Log Information], [Channel Information], channel IDs) before the real header row at line 10. We were failing your file in ~5 milliseconds without looking at what was in it. Now the validator uses the same header-detection logic the pipeline uses (parser.detect_structure), which has always known about the preamble. A file that produces a real report in the pipeline will now always pass the upload gate — there's only one answer to 'is this an HPT log' across the whole codebase.",
+        description: [
+          "Upload validator was rejecting every real VCM Scanner CSV.",
+          "It was checking the wrong row for column headers — failing before it ever looked at the data.",
+          "Fixed. Real HPTuners logs go through.",
+        ],
       },
       {
-        title: "Fuel pressure analysis — now working on Gen 5 DI",
+        title: "Fuel pressure analysis works on Gen 5 DI",
         tags: ["Product"],
-        description:
-          "Gen 5 DI engines report fuel rail pressure in MPa (values 2-17). The unit detector in the fuel-pressure module only knew kPa vs psi, so every MPa log fell into the psi branch, applied a 500-psi pairing threshold, and produced zero paired samples. Net effect: the fuel-pressure module was silently returning 'not enough data' on every single Gen 5 DI log — even WOT pulls that clearly showed HPFP capacity limits. MPa is now a first-class branch. On a quick local check, one previously-empty log went from 0 paired samples to 237 pairs plus 39 sustained HPFP capacity events totaling 55.9 seconds of >250 psi tracking error. If your pump is at its limit, you'll see it now.",
+        description: [
+          "Gen 5 DI engines report fuel rail pressure in MPa.",
+          "The unit detector only knew kPa and psi.",
+          "Every Gen 5 DI log was silently falling through and producing no fuel-pressure results — even WOT pulls that clearly showed pump capacity limits.",
+          "Fixed. The module now detects sustained HPFP capacity events — the thing that matters when your pump is at its limit.",
+        ],
       },
       {
         title: "Vehicle picker actually sees your builds",
         tags: ["Product"],
-        description:
-          "Two bugs coupled together. First: the 'Add Vehicle' form was writing to the vehicles table, but the upload page's vehicle dropdown reads from vehicle_profiles — two different tables, no cross-reference. Adding a vehicle did nothing for the upload flow. Second: the /upload endpoint wasn't even declaring vehicle_profile_id in its form signature, so FastAPI silently dropped the field when the frontend sent it. Even if you picked a pre-existing profile, the case row wouldn't bind to it. Both fixed — adding a vehicle now puts it in the dropdown, selecting it on upload binds cases.vehicle_profile_id to the build, and the case history page can finally group logs by vehicle correctly.",
+        description: [
+          "Adding a vehicle from the dashboard used to do nothing for the upload flow.",
+          "Saved vehicle went one place; the upload's picker looked somewhere else.",
+          "Fixed. Add a vehicle — it shows in your upload picker, and your case rows bind to the right build.",
+        ],
       },
       {
         title: "Changelog page live",
         tags: ["Product"],
-        description:
-          "What you're reading now. Same entries on both app.tuneview.io/changelog and tuneview.io/changelog — no signup required, no gating, just what shipped and why.",
+        description: [
+          "app.tuneview.io/changelog",
+          "tuneview.io/changelog",
+          "No signup, no gating.",
+        ],
       },
     ],
     behindTheScenes: [
       {
-        title: "HPT log format owned by parser.py",
+        title: "Log format recognition consolidated",
         tags: ["Infrastructure"],
-        description:
-          "The HPT log validator and the pipeline parser had diverged. The validator hand-rolled string matching against bare column names like 'Engine RPM', which real VCM Scanner files don't carry (they have 'Engine Speed (SAE) (RPM)' with unit suffixes). So even after we fixed the preamble skip, there was a second bug class: two implementations of 'what's an HPT log' getting out of sync. Solution: all format decisions — header detection, alias matching, distinctive-canonical recognition — now live in app/parsers/parser.py. The validator is a 7-line wrapper that calls parser.validate_hpt_log and turns a failed gate into an HTTP 422. A new 'Architecture Laws — Non-Negotiable' section in CLAUDE.md codifies the rule: no duplicate format logic permitted anywhere in the codebase. Duplication caused this bug. Making it non-negotiable prevents the next one.",
+        description: [
+          "Two of the user-facing bugs above traced to the same cause.",
+          "Two separate parts of the code each had their own answer to \"is this an HPT log\" — and they'd drifted apart.",
+          "Collapsed to one. A standing rule prevents it from creeping back in.",
+        ],
       },
       {
         title: "Region-aware fuel-pressure analytics",
         tags: ["Infrastructure"],
-        description:
-          "Lifted from a March 2026 prototype into the live fuel_pressure_tracking module. New metrics: operating-region bucketing (idle / light_cruise / moderate_load, classified by injector pulsewidth), steady-vs-transient sample stratification (so a commanded pressure ramp doesn't inflate error stats), spike counts at two thresholds (>150 psi, >250 psi abs error), sustained-high-error event detection with a 0.50-second minimum duration window (one-off noise doesn't count, sustained capacity drops do), p95 stats, and an injector pulsewidth descriptor. The module now also emits a P2 'Investigate HPFP capacity limit' recommendation when sustained events fire.",
+        description: [
+          "Errors stratified by operating region: idle / light cruise / moderate load.",
+          "Steady vs transient flow separated — a commanded pressure ramp no longer inflates error stats.",
+          "Duration-based filtering: one-off noise doesn't count; sustained drops under load do.",
+          "When a sustained event fires, the module recommends checking pump duty cycle and inlet vacuum.",
+        ],
       },
       {
-        title: "Dead legacy FastAPI removed",
+        title: "Legacy prototype cleanup",
         tags: ["Infrastructure"],
-        description:
-          "scripts/api.py — an 87-line FastAPI service from March that invoked prototype modules via subprocess with a hard-coded Windows path. Had zero callers in the live app, referenced a module (torque_model/) that no longer existed, and used the same subprocess anti-pattern the current pipeline explicitly repudiated. Deleted outright.",
-      },
-      {
-        title: "09_MODULES archived",
-        tags: ["Infrastructure"],
-        description:
-          "The old prototype directory (fuel_delivery Python package + lambdaworx-ui Vite/React frontend) moved to 99_Archive/09_MODULES_2026-03/ after its useful parts were extracted. 106 MB of node_modules stripped before archiving; the actual code surface is now 409 KB. Historical reference preserved, workbench cleared.",
-      },
-      {
-        title: "CLAUDE.md tracked in both repos",
-        tags: ["Infrastructure"],
-        description:
-          "The standing brief and Architecture Laws (HPT format ownership, etc.) lived as a single local file at the root of the developer machine — not tracked in any git repo. Machine loss would have wiped it. Now mirrored as CLAUDE.md in both tuneview-backend and tuneview-frontend, each carrying a sync-warning header noting the canonical source and the other mirror. Drift prevention via script/hook tracked as technical debt.",
+        description: [
+          "Removed a dead internal API endpoint from an earlier experimental phase.",
+          "Archived the old prototype directory after lifting its useful analytics.",
+          "Workbench clearer.",
+        ],
       },
     ],
   },

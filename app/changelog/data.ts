@@ -27,6 +27,62 @@ export type ChangelogEntry = {
 
 export const CHANGELOG: ChangelogEntry[] = [
   {
+    version: "0.3.1",
+    date: "2026-04-20",
+    summary:
+      "Marketing site tells the story better. Backend research layer gets a second brain — region-locked DB lookups that stay quiet until we feed them.",
+    userFacing: [
+      {
+        title: "Demo section actually shows the product",
+        tags: ["Product"],
+        description: [
+          "The homepage demo used to gesture at what TuneView does.",
+          "Now it shows a real B-/81 module card with the penalty breakdown — the thing you'll actually see after a scan.",
+          "Cut the floating score-weighting button and the stale scores panel. One clear artifact beats three half-explained ones.",
+        ],
+      },
+      {
+        title: "How It Works reads like it was written for a tuner",
+        tags: ["Product"],
+        description: [
+          "Trust chips, tighter step captions, no dev-speak.",
+          "If you land on the page cold, you should now understand the pipeline in under ten seconds.",
+        ],
+      },
+      {
+        title: "Pricing flags Dragy as coming soon",
+        tags: ["Product"],
+        description:
+          "Dragy integration is on the roadmap but not live. The DIY tier now says so explicitly instead of implying it ships today.",
+      },
+      {
+        title: "Site type is readable again",
+        tags: ["Product"],
+        description: [
+          "Sweep across the marketing site bumped small-type sizes up a notch.",
+          "Nothing changed structurally — things just stop straining your eyes.",
+        ],
+      },
+    ],
+    behindTheScenes: [
+      {
+        title: "Research intelligence gets a DB-backed query layer",
+        tags: ["AI", "Infrastructure"],
+        description: [
+          "The pipeline now merges two research sources: the existing rule-based matcher and a new region-locked layer that queries structured patterns from a SQLite knowledge DB.",
+          "Region-locking means a pattern only counts if your log actually has the operating region (idle / low pedal / part throttle / WOT) it was derived from.",
+          "The DB is optional — if it's not populated, the pipeline falls back to rule-based only. Silent fail-open, by design.",
+        ],
+      },
+      {
+        title: "End-of-session protocol codified in CLAUDE.md",
+        tags: ["Infrastructure"],
+        description:
+          "Claude now drafts a changelog entry before every session close instead of waiting to be asked. This entry is the first one it produced on its own.",
+      },
+    ],
+  },
+  {
     version: "0.3.0",
     date: "2026-04-19",
     summary:

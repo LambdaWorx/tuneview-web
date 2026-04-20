@@ -22,19 +22,19 @@ export default function ForShopsClient() {
   }
 
   return (
-    <div className="min-h-screen pt-[52px] px-5 md:px-10 flex flex-col items-center justify-center">
+    <div className="min-h-screen pt-[80px] px-5 md:px-10 flex flex-col items-center justify-center">
       <div className="max-w-2xl w-full text-center py-24">
-        <p className="font-mono text-[9px] tracking-widest text-cyan mb-4">
+        <p className="font-mono text-[11px] tracking-widest text-cyan mb-4">
           // TuneView for Shops
         </p>
         <h1 className="font-display font-bold text-t1 text-4xl md:text-5xl mb-6 leading-tight">
           Give every customer a report card.
         </h1>
-        <p className="font-mono text-[11px] leading-relaxed text-t2 mb-4 max-w-lg mx-auto">
+        <p className="font-mono text-[13px] leading-relaxed text-t2 mb-4 max-w-lg mx-auto">
           Complete revision tracking. Audit trails. Shop baseline libraries.
           Dyno session hosting. Every revision. Every outcome. Recorded.
         </p>
-        <p className="font-mono text-[10px] text-t3 mb-8">
+        <p className="font-mono text-[12px] text-t3 mb-8">
           Full shop page coming soon.
         </p>
 
@@ -47,7 +47,7 @@ export default function ForShopsClient() {
             borderTop: "2px solid #FF5050",
           }}
         >
-          <p className="font-mono text-[8px] tracking-widest text-red-400 mb-2">
+          <p className="font-mono text-[10px] tracking-widest text-red-400 mb-2">
             // RED TIER · $299/mo
           </p>
           <ul className="flex flex-col gap-1.5">
@@ -61,7 +61,7 @@ export default function ForShopsClient() {
             ].map((f) => (
               <li
                 key={f}
-                className="font-mono text-[9px] tracking-wide text-t2 flex gap-2"
+                className="font-mono text-[11px] tracking-wide text-t2 flex gap-2"
               >
                 <span className="text-red-400">·</span>
                 {f}
@@ -70,7 +70,7 @@ export default function ForShopsClient() {
           </ul>
           <Link
             href="/#pricing"
-            className="inline-block mt-4 font-mono text-[9px] tracking-widest text-red-400 border border-red-400/30 bg-red-400/5 hover:bg-red-400/10 px-4 py-2 rounded-[2px] transition-colors"
+            className="inline-block mt-4 font-mono text-[11px] tracking-widest text-red-400 border border-red-400/30 bg-red-400/5 hover:bg-red-400/10 px-4 py-2 rounded-[2px] transition-colors"
           >
             ← See full pricing
           </Link>
@@ -78,7 +78,7 @@ export default function ForShopsClient() {
 
         {/* Email capture */}
         {status === "done" ? (
-          <p className="font-mono text-[11px] tracking-widest text-cyan py-4">
+          <p className="font-mono text-[13px] tracking-widest text-cyan py-4">
             // you&apos;re on the list ✓
           </p>
         ) : (
@@ -92,7 +92,7 @@ export default function ForShopsClient() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="shop@email.com"
-              className="flex-1 font-mono text-[11px] px-4 py-3 rounded-[2px] text-t1 placeholder:text-t3 outline-none"
+              className="flex-1 font-mono text-[13px] px-4 py-3 rounded-[2px] text-t1 placeholder:text-t3 outline-none"
               style={{ background: "var(--bg)", border: "1px solid var(--border2)" }}
               onFocus={(e) => (e.target.style.borderColor = "rgba(0,220,255,0.4)")}
               onBlur={(e) => (e.target.style.borderColor = "var(--border2)")}
@@ -100,14 +100,14 @@ export default function ForShopsClient() {
             <button
               type="submit"
               disabled={status === "loading"}
-              className="font-mono text-[9px] tracking-widest text-bg bg-cyan hover:bg-cyan/90 disabled:opacity-50 px-6 py-3 rounded-[2px] transition-colors"
+              className="font-mono text-[11px] tracking-widest text-bg bg-cyan hover:bg-cyan/90 disabled:opacity-50 px-6 py-3 rounded-[2px] transition-colors"
             >
               {status === "loading" ? "..." : "NOTIFY ME"}
             </button>
           </form>
         )}
         {status === "error" && (
-          <p className="font-mono text-[9px] text-red-400 mt-2">
+          <p className="font-mono text-[11px] text-red-400 mt-2">
             Something went wrong or already on the list.
           </p>
         )}

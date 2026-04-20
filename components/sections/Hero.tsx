@@ -170,7 +170,7 @@ export default function Hero() {
   const canvasRef = useWordmarkCanvas();
 
   return (
-    <section className="relative flex flex-col items-center justify-center min-h-screen pt-[52px] px-5 text-center z-10">
+    <section className="relative flex flex-col items-center justify-center min-h-screen pt-[80px] px-5 text-center z-10">
       {/* Animated wordmark */}
       <motion.div
         custom={0}
@@ -218,13 +218,13 @@ export default function Hero() {
       >
         <Link
           href="/#early-access"
-          className="font-mono text-[10px] tracking-widest text-bg bg-cyan hover:bg-cyan/90 transition-colors px-6 py-3 rounded-[2px]"
+          className="font-mono text-[12px] tracking-widest text-bg bg-cyan hover:bg-cyan/90 transition-colors px-6 py-3 rounded-[2px]"
         >
           GET EARLY ACCESS
         </Link>
         <Link
           href="/#how-it-works"
-          className="font-mono text-[10px] tracking-widest text-cyan border border-cyan/30 hover:border-cyan/60 bg-cyan/5 hover:bg-cyan/10 transition-colors px-6 py-3 rounded-[2px]"
+          className="font-mono text-[12px] tracking-widest text-cyan border border-cyan/30 hover:border-cyan/60 bg-cyan/5 hover:bg-cyan/10 transition-colors px-6 py-3 rounded-[2px]"
         >
           SEE HOW IT WORKS
         </Link>
@@ -243,7 +243,7 @@ export default function Hero() {
           transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
           className="w-px h-8 bg-cyan/50"
         />
-        <span className="font-mono text-[8px] tracking-widest text-t3">
+        <span className="font-mono text-[10px] tracking-widest text-t3">
           scroll
         </span>
       </motion.div>

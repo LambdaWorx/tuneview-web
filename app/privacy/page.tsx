@@ -5,19 +5,19 @@ export const metadata = {
 
 export default function PrivacyPage() {
   return (
-    <div className="min-h-screen pt-[52px] px-5 md:px-10">
+    <div className="min-h-screen pt-[80px] px-5 md:px-10">
       <div className="max-w-2xl mx-auto py-24">
-        <p className="font-mono text-[9px] tracking-widest text-cyan mb-6">
+        <p className="font-mono text-[11px] tracking-widest text-cyan mb-6">
           // Privacy Policy
         </p>
         <h1 className="font-display font-bold text-t1 text-3xl md:text-4xl mb-4">
           Privacy Policy
         </h1>
-        <p className="font-mono text-[9px] tracking-widest text-t3 mb-16">
+        <p className="font-mono text-[11px] tracking-widest text-t3 mb-16">
           Last updated: 2026-04-14 · Placeholder
         </p>
 
-        <div className="flex flex-col gap-10 font-mono text-[11px] leading-relaxed text-t2">
+        <div className="flex flex-col gap-10 font-mono text-[13px] leading-relaxed text-t2">
           {[
             {
               title: "What we collect",
